@@ -7,6 +7,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 # Library
 add_library(${CMAKE_PROJECT_NAME} INTERFACE)
+target_compile_definitions(${CMAKE_PROJECT_NAME} INTERFACE _USE_MATH_DEFINES)
 target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>" "$<INSTALL_INTERFACE:include>")
 
 # Example
