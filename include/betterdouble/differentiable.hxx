@@ -96,4 +96,9 @@ namespace bd
 
     template<class T, unsigned int N> inline Differentiable<T, N> abs  (const Differentiable<T, N> &a) noexcept { return ((a.value >= 0) ? (+a) : (-a)); };
     template<class T, unsigned int N> inline Differentiable<T, N> fabs (const Differentiable<T, N> &a) noexcept { return ((a.value >= 0) ? (+a) : (-a)); };
+
+    //Defines
+    typedef Differentiable<float, 1> DFloat;
+    typedef Differentiable<double, 1> DDouble;
+    typedef Differentiable<long double, 1> DLongDouble;
 }
