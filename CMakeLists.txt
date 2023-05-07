@@ -11,8 +11,16 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} INTERFACE _USE_MATH_DEFINES)
 target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>" "$<INSTALL_INTERFACE:include>")
 
 # Example
-add_executable(example example/example.cpp)
-target_link_libraries(example PUBLIC ${CMAKE_PROJECT_NAME})
+find_package(GTest)
+if (GTest_FOUND)
+    add_executable(example example/example.cpp)
+    target_link_libraries(example PUBLIC ${CMAKE_PROJECT_NAME})
+    target_link_libraries(example PUBLIC GTest::gtest)
+
+    add_custom_target(test COMMAND example)
+else()
+    message(WARNING "GTest not found, omitting example compilation")
+endif()
 
 # Installation
 include(GNUInstallDirs)

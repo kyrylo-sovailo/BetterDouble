@@ -1,6 +1,6 @@
 PROJECT_NAME           = "BetterDouble"
 PROJECT_BRIEF          = "Real numbers with extra capabilities"
-FILE_PATTERNS          = *.h
+FILE_PATTERNS          = *.hpp
 INPUT                  = include
 OUTPUT_DIRECTORY       = documentation
 RECURSIVE              = YES
