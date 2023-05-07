@@ -12,14 +12,15 @@ target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE "$<BUILD_INTERFACE:${
 
 # Example
 find_package(GTest)
-if (GTest_FOUND)
+find_package(Eigen3)
+if (GTest_FOUND AND Eigen3_FOUND)
     add_executable(example example/example.cpp)
     target_link_libraries(example PUBLIC ${CMAKE_PROJECT_NAME})
-    target_link_libraries(example PUBLIC GTest::gtest)
+    target_link_libraries(example PUBLIC GTest::gtest Eigen3::Eigen)
 
     add_custom_target(test COMMAND example)
 else()
-    message(WARNING "GTest not found, omitting example compilation")
+    message(WARNING "GTest/Eigen3 not found, omitting example compilation")
 endif()
 
 # Installation

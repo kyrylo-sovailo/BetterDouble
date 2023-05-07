@@ -26,7 +26,7 @@ namespace bd
         inline Real()                              noexcept       {};
         inline Real(T other)                       noexcept       { value = other; };
         inline Real(const Real &other)             noexcept       { value = other.value; };
-        inline Real &operator= (const Real &other) noexcept       { value = other.value;  return *this; };
+        // Real &operator= (const Real &other) noexcept       { value = other.value;  return *this; };
 
         //Increments/decrements
         inline Real &operator++()                  noexcept       { ++value; return *this; };
@@ -47,23 +47,23 @@ namespace bd
     };
 
     //Comparison
-    template<class T, class L> inline bool operator==(const L &a,       const Real<T> &b) { return a       == b.value; };
-    template<class T, class R> inline bool operator==(const Real<T> &a, const R       &b) { return a.value == b;       };
+    //template<class T, class L> inline bool operator==(const L &a,       const Real<T> &b) { return a       == b.value; };
+    //template<class T, class R> inline bool operator==(const Real<T> &a, const R       &b) { return a.value == b;       };
     template<class T>          inline bool operator==(const Real<T> &a, const Real<T> &b) { return a.value == b.value; };
-    template<class T, class L> inline bool operator!=(const L &a,       const Real<T> &b) { return a       != b.value; };
-    template<class T, class R> inline bool operator!=(const Real<T> &a, const R       &b) { return a.value != b;       };
+    //template<class T, class L> inline bool operator!=(const L &a,       const Real<T> &b) { return a       != b.value; };
+    //template<class T, class R> inline bool operator!=(const Real<T> &a, const R       &b) { return a.value != b;       };
     template<class T>          inline bool operator!=(const Real<T> &a, const Real<T> &b) { return a.value != b.value; };
-    template<class T, class L> inline bool operator> (const L &a,       const Real<T> &b) { return a       >  b.value; };
-    template<class T, class R> inline bool operator> (const Real<T> &a, const R       &b) { return a.value >  b;       };
+    //template<class T, class L> inline bool operator> (const L &a,       const Real<T> &b) { return a       >  b.value; };
+    //template<class T, class R> inline bool operator> (const Real<T> &a, const R       &b) { return a.value >  b;       };
     template<class T>          inline bool operator> (const Real<T> &a, const Real<T> &b) { return a.value >  b.value; };
-    template<class T, class L> inline bool operator< (const L &a,       const Real<T> &b) { return a       <  b.value; };
-    template<class T, class R> inline bool operator< (const Real<T> &a, const R       &b) { return a.value <  b;       };
+    //template<class T, class L> inline bool operator< (const L &a,       const Real<T> &b) { return a       <  b.value; };
+    //template<class T, class R> inline bool operator< (const Real<T> &a, const R       &b) { return a.value <  b;       };
     template<class T>          inline bool operator< (const Real<T> &a, const Real<T> &b) { return a.value <  b.value; };
-    template<class T, class L> inline bool operator>=(const L &a,       const Real<T> &b) { return a       >= b.value; };
-    template<class T, class R> inline bool operator>=(const Real<T> &a, const R       &b) { return a.value >= b;       };
+    //template<class T, class L> inline bool operator>=(const L &a,       const Real<T> &b) { return a       >= b.value; };
+    //template<class T, class R> inline bool operator>=(const Real<T> &a, const R       &b) { return a.value >= b;       };
     template<class T>          inline bool operator>=(const Real<T> &a, const Real<T> &b) { return a.value >= b.value; };
-    template<class T, class L> inline bool operator<=(const L &a,       const Real<T> &b) { return a       <= b.value; };
-    template<class T, class R> inline bool operator<=(const Real<T> &a, const R       &b) { return a.value <= b;       };
+    //template<class T, class L> inline bool operator<=(const L &a,       const Real<T> &b) { return a       <= b.value; };
+    //template<class T, class R> inline bool operator<=(const Real<T> &a, const R       &b) { return a.value <= b;       };
     template<class T>          inline bool operator<=(const Real<T> &a, const Real<T> &b) { return a.value <= b.value; };
 
     //Functions

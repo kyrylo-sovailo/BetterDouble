@@ -1,5 +1,6 @@
 #include "../include/betterdouble/betterdouble.hpp"
 #include <gtest/gtest.h>
+#include <Eigen/Eigenvalues>
 
 template class bd::Real<float>;
 template class bd::Real<double>;
@@ -59,6 +60,18 @@ TEST(Trigonometry, Cosine)
     bd::DDouble c = bd::cos(a);
     EXPECT_NEAR(c, std::cos(1), 0.001);
     EXPECT_NEAR(c.derivative[0], -std::sin(1), 0.001);
+}
+
+TEST(Eigen, Eigen)
+{
+    Eigen::Matrix<bd::DDouble, Eigen::Dynamic, Eigen::Dynamic> matrix(2, 2);
+    matrix(0, 0) =  0; matrix(0, 1) =  1;
+    matrix(1, 0) = -2; matrix(1, 1) = -3;
+    Eigen::EigenSolver<Eigen::Matrix<bd::DDouble, Eigen::Dynamic, Eigen::Dynamic>> solver;
+    solver.compute(matrix);
+    Eigen::Matrix<bd::DDouble, Eigen::Dynamic, 1> vector = solver.eigenvectors().col(0).real();
+    EXPECT_NEAR(vector(0),  1.0 / sqrt(2.0), 0.001);
+    EXPECT_NEAR(vector(1), -1.0 / sqrt(2.0), 0.001);
 }
 
 int main(int argc, char **argv)
