@@ -94,12 +94,10 @@ namespace bd
     template<class T, unsigned int N> constexpr inline Differentiable<T, N> hypot(const Differentiable<T, N> &x,    const Differentiable<T, N> &y)        noexcept { Differentiable<T, N> v; v.value = std::hypot(x.value, y.value);         for (unsigned int i = 0; i < N; ++i) v.derivative[i] = (x.value * x.derivative[i] + y.value * y.derivative[i]) / v.value; return v; };
 
     //Error and gamma functions
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> erf   (const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::erf  (x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] =  2 * x.derivative[i] * std::exp(-x.value * x.value) / M_PI;   return v; };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> erfc  (const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::erfc (x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = -2 * x.derivative[i] * std::exp(-x.value * x.value) / M_PI;   return v; };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> tgamma(const Differentiable<T, N> &x) noexcept { return (Differentiable<T, N>)std::tgamma(x.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> lgamma(const Differentiable<T, N> &x) noexcept { return (Differentiable<T, N>)std::lgamma(x.value); };
-    //tgamma not implemented
-    //lgamma not implemented
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> erf   (const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::erf   (x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] =  2 * x.derivative[i] * std::exp(-x.value * x.value) / M_PI;   return v; };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> erfc  (const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::erfc  (x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = -2 * x.derivative[i] * std::exp(-x.value * x.value) / M_PI;   return v; };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> tgamma(const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::tgamma(x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = std::numeric_limits<T>::quiet_NaN(); return v; };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> lgamma(const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::lgamma(x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = std::numeric_limits<T>::quiet_NaN(); return v; };
 
     //Rounding and remainder functions
     template<class T, unsigned int N> constexpr inline Differentiable<T, N> ceil     (const Differentiable<T, N> &x) noexcept { return (Differentiable<T, N>)std::ceil     (x.value); };
@@ -117,20 +115,20 @@ namespace bd
     template<class T, unsigned int N> constexpr inline Differentiable<T, N> remquo   (const Differentiable<T, N> &numer, const Differentiable<T, N> &denom, int *quot) noexcept { return (Differentiable<T, N>)std::remquo   (numer.value, denom.value, quot); };
 
     //Floating-point manipulation functions
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> copysign  (const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { return (Differentiable<T, N>)std::copysign  (x.value, y.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nan       (const char* tagp)                                             noexcept { return (Differentiable<T, N>)std::nan(tagp); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nextafter (const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { return (Differentiable<T, N>)std::nextafter (x.value, y.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nexttoward(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { return (Differentiable<T, N>)std::nexttoward(x.value, y.value); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> copysign  (const Differentiable<T, N> &mag, const Differentiable<T, N> &sgn) noexcept { return (std::isnan(mag.value)) ? ((Differentiable<T, N>)(sgn.value > 0 - sgn.value < 0)) : ((std::signbit(mag.value) == std::signbit(sgn.value)) ? (mag) : (-mag)); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nan       (const char* tagp)                                                 noexcept { return (Differentiable<T, N>)std::nan       (tagp); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nextafter (const Differentiable<T, N> &x,   const Differentiable<T, N> &y)   noexcept { return (Differentiable<T, N>)std::nextafter (x.value, y.value); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> nexttoward(const Differentiable<T, N> &x,   const Differentiable<T, N> &y)   noexcept { return (Differentiable<T, N>)std::nexttoward(x.value, y.value); };
     
     //Minimum, maximum, difference functions
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fdim(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { (Differentiable<T, N>)std::fdim(x.value, y.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fmax(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { (Differentiable<T, N>)std::fmax(x.value, y.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fmin(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { (Differentiable<T, N>)std::fmin(x.value, y.value); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fdim(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { return (x > y) ? (x - y) : ((Differentiable<T, N>)0); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fmax(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { if (std::isnan(x.value)) return y; if (std::isnan(y.value)) return x; return (x > y) ? (x) : (y); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fmin(const Differentiable<T, N> &x, const Differentiable<T, N> &y) noexcept { if (std::isnan(x.value)) return y; if (std::isnan(y.value)) return x; return (x < y) ? (x) : (y); };
     
     //Other functions
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fabs(const Differentiable<T, N> &x) noexcept { return (Differentiable<T, N>)std::fabs(x.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> abs (const Differentiable<T, N> &x) noexcept { return (Differentiable<T, N>)std::abs (x.value); };
-    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fma (const Differentiable<T, N> &x, const Differentiable<T, N> &y, const Differentiable<T, N> &z) noexcept { return (Differentiable<T, N>)std::fma(x.value, y.value, z.value); };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fabs(const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::fabs(x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = ((x.value == 0) ? (std::numeric_limits<T>::quiet_NaN()) : ((x.value > 0) ? (x.derivative[i]) : (-x.derivative[i]))); return v; };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> abs (const Differentiable<T, N> &x) noexcept { Differentiable<T, N> v; v.value = std::abs (x.value); for (unsigned int i = 0; i < N; ++i) v.derivative[i] = ((x.value == 0) ? (std::numeric_limits<T>::quiet_NaN()) : ((x.value > 0) ? (x.derivative[i]) : (-x.derivative[i]))); return v; };
+    template<class T, unsigned int N> constexpr inline Differentiable<T, N> fma (const Differentiable<T, N> &x, const Differentiable<T, N> &y, const Differentiable<T, N> &z) noexcept { return x * y + z; };
 
     //Classification macro / functions
     template<class T, unsigned int N> constexpr inline int  fpclassify(const Differentiable<T, N> &x) noexcept { return std::fpclassify(x.value); }

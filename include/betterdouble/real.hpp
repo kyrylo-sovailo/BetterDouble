@@ -118,7 +118,7 @@ namespace bd
 
     //Floating-point manipulation functions
     template<class T> constexpr inline Real<T> copysign  (const Real<T> &x, const Real<T> &y) noexcept { return (Real<T>)std::copysign  (x.value, y.value); };
-    template<class T> constexpr inline Real<T> nan       (const char* tagp)                   noexcept { return (Real<T>)(Real<T>)std::nan(tagp); };
+    template<class T> constexpr inline Real<T> nan       (const char* tagp)                   noexcept { return (Real<T>)std::nan       (tagp); };
     template<class T> constexpr inline Real<T> nextafter (const Real<T> &x, const Real<T> &y) noexcept { return (Real<T>)std::nextafter (x.value, y.value); };
     template<class T> constexpr inline Real<T> nexttoward(const Real<T> &x, const Real<T> &y) noexcept { return (Real<T>)std::nexttoward(x.value, y.value); };
     

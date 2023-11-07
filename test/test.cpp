@@ -4,6 +4,7 @@
 #include <limits>
 
 template class bd::Real<double>;
+template class bd::Differentiable<double, 1>;
 
 TEST(Arithmetics, Operators)
 {
